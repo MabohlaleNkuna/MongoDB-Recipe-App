@@ -6,12 +6,13 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  createMultipleRecipes,
 } = require('../controllers/recipeController');
 
 const router = express.Router();
 
 router.post('/recipes', createRecipe);
-router.post('/recipes/bulk', createMultipleRecipes);
+router.post('/recipes/bulk, createMultipleRecipes')
 router.get('/recipes', getAllRecipes);
 router.get('/recipes/:id', getRecipeById);
 router.put('/recipes/:id', updateRecipe);
