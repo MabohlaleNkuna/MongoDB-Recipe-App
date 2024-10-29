@@ -10,7 +10,7 @@ const generateToken = (id) => {
 
 // Register a new user
 const registerUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password,username } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -22,9 +22,9 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       email,
       password,
+      username,
     });
 
-    // Return JWT token
     res.status(201).json({
       _id: user._id,
       email: user.email,
