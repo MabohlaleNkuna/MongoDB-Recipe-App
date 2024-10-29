@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors'); 
 require('dotenv').config();
-const userRoutes = require('./routes/userRoutes'); // User routes
-const recipeRoutes = require('./routes/recipeRoutes'); // Recipe routes
+const userRoutes = require('./routes/userRoutes'); 
+const recipeRoutes = require('./routes/recipeRoutes'); 
 
 const app = express();
 app.use(express.json());
-app.use(cors()); // Enable CORS
+app.use(cors()); 
 
 // Log the MongoDB URI to verify it's loaded
 console.log("MongoDB URI:", process.env.MONGO_URI);
@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 // Use user routes
 app.use('/api/users', userRoutes);
 
-app.use('/api/recipes', recipeRoutes); 
+app.use('/recipes', recipeRoutes); 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
