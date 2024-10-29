@@ -1,4 +1,3 @@
-// routes/recipeRoutes.js
 const express = require('express');
 const {
   createRecipe,
@@ -6,16 +5,15 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
-  createMultipleRecipes,
 } = require('../controllers/recipeController');
+const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.post('/recipes', createRecipe);
-router.post('/recipes/bulk, createMultipleRecipes')
-router.get('/recipes', getAllRecipes);
-router.get('/recipes/:id', getRecipeById);
-router.put('/recipes/:id', updateRecipe);
-router.delete('/recipes/:id', deleteRecipe);
+router.post('/recipes', protect, createRecipe);
+router.get('/recipes', protect, getAllRecipes);
+router.get('/recipes/:id', protect, getRecipeById);
+router.put('/recipes/:id', protect, updateRecipe);
+router.delete('/recipes/:id', protect, deleteRecipe);
 
 module.exports = router;
