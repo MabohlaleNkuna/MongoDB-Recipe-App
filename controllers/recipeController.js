@@ -1,11 +1,14 @@
-const Recipe = require('../models/Recipe');
+const Recipe = require('../models/Recipe.js');
 
 // Create a new recipe
 const createRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.create({ ...req.body, user: req.user._id });
+    console.log(recipe)
+
     res.status(201).json(recipe);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ message: error.message });
   }
 };

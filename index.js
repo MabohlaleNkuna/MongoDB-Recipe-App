@@ -7,6 +7,8 @@ const recipeRoutes = require('./routes/recipeRoutes');
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(cors()); 
 
 // Log the MongoDB URI to verify it's loaded
