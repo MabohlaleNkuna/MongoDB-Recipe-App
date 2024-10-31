@@ -8,7 +8,6 @@ const generateToken = (id) => {
   });
 };
 
-// Register a new user
 const registerUser = async (req, res) => {
   const { email, password,username } = req.body;
 
@@ -17,8 +16,6 @@ const registerUser = async (req, res) => {
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
-
-    // Create new user
     const user = await User.create({
       email,
       password,
@@ -34,8 +31,6 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-// Login a user
 const loginUser = async (req, res) => {
 
   const { email, password } = req.body;
@@ -101,14 +96,14 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    await user.remove();
-    res.json({ message: 'User removed' });
+    await user.remove(); 
+    return res.status(204).send(); 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error deleting user:", error); 
+    return res.status(500).json({ message: 'An error occurred while deleting the user' });
   }
 };
 
-// Export all functions
 module.exports = {
   registerUser,
   loginUser,
