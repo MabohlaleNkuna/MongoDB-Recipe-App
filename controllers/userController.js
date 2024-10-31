@@ -9,7 +9,7 @@ const generateToken = (id) => {
 };
 
 const registerUser = async (req, res) => {
-  const { email, password,username } = req.body;
+  const { email, password, username, role } = req.body;
 
   try {
     const userExists = await User.findOne({ email });
@@ -20,19 +20,28 @@ const registerUser = async (req, res) => {
       email,
       password,
       username,
+      role: role || 'user', 
     });
 
     res.status(201).json({
       _id: user._id,
       email: user.email,
+      role: user.role, 
       token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-const loginUser = async (req, res) => {
+const protectAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next(); 
+  } else {
+    res.status(403).json({ message: 'Not authorized as an admin' }); // User is not an admin
+  }
+};
 
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -42,6 +51,7 @@ const loginUser = async (req, res) => {
       res.json({
         _id: user._id,
         email: user.email,
+        role: user.role, 
         token: generateToken(user._id),
       });
     } else {
@@ -111,4 +121,5 @@ module.exports = {
   createUser: registerUser, 
   updateUser,
   deleteUser,
+  protectAdmin,
 };
